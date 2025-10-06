@@ -35,7 +35,7 @@
       width: 500px;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      border: 1px solid #67e8f9;
+      border: 1px solid #5eead4;
       display: flex;
       flex-direction: column;
       gap: 25px;
@@ -45,7 +45,7 @@
       text-align: center;
       font-size: 2em;
       font-weight: 600;
-      color: #0d9488;
+      color: #0f766e;
       margin-bottom: 10px;
     }
 
@@ -58,9 +58,9 @@
       width: 100%;
       padding: 15px 45px 15px 20px;
       font-size: 1.1em;
-      color: #0f766e;
+      color: #0d9488;
       border-radius: 8px;
-      background: #f0fdfa;
+      background: #ecfeff;
       border: 1px solid #99f6e4;
       outline: none;
     }
@@ -76,14 +76,14 @@
       transform: translateY(-50%);
       cursor: pointer;
       font-size: 1.1em;
-      color: #14b8a6;
+      color: #0d9488;
     }
 
     button {
       width: 100%;
       padding: 15px;
       border: none;
-      background: linear-gradient(to right, #14b8a6, #06b6d4);
+      background: #14b8a6;
       color: #fff;
       font-size: 1.15em;
       font-weight: 500;
@@ -93,7 +93,7 @@
     }
 
     button:hover {
-      background: linear-gradient(to right, #0d9488, #0891b2);
+      background: #0f766e;
     }
 
     .group {
@@ -112,10 +112,10 @@
     }
 
     .error-box {
-      background: rgba(13,148,136,0.08);
-      color: #0d9488;
+      background: rgba(0, 128, 128, 0.1);
+      color: #0f766e;
       padding: 10px;
-      border: 1px solid #0d9488;
+      border: 1px solid #0f766e;
       border-radius: 8px;
       text-align: center;
       font-size: 0.95em;

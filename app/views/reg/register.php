@@ -28,14 +28,14 @@
       width: 500px;
       border-radius: 20px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-      border: 1px solid #67e8f9;
+      border: 1px solid #5eead4;
     }
 
     .login h2 {
       text-align: center;
       font-size: 2em;
       font-weight: 600;
-      color: #0d9488;
+      color: #0f766e;
       margin-bottom: 25px;
     }
 
@@ -46,8 +46,8 @@
       font-size: 1.05em;
       border-radius: 8px;
       border: 1px solid #99f6e4;
-      background: #f0fdfa;
-      color: #0f766e;
+      background: #ecfeff;
+      color: #0d9488;
       outline: none;
     }
 
@@ -65,7 +65,7 @@
       top: 50%;
       transform: translateY(-50%);
       cursor: pointer;
-      color: #14b8a6;
+      color: #0d9488;
     }
 
     #btn {
@@ -75,14 +75,14 @@
       font-weight: 500;
       border: none;
       border-radius: 10px;
-      background: linear-gradient(to right, #14b8a6, #06b6d4);
+      background: #14b8a6;
       color: white;
       cursor: pointer;
       transition: background 0.3s ease;
     }
 
     #btn:hover {
-      background: linear-gradient(to right, #0d9488, #0891b2);
+      background: #0f766e;
     }
 
     .group {
