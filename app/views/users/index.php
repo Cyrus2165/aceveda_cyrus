@@ -80,7 +80,7 @@
       <div class="mt-6 text-center">
         <a href="<?=site_url('users/create')?>"
            class="bg-teal-600 hover:bg-teal-700"
-                      class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transform hover:scale-105 transition duration-300 inline-block">
+           class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transform hover:scale-105 transition duration-300 inline-block">
            ➕ Create New User
         </a>
       </div>
