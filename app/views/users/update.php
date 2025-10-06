@@ -3,66 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update Record</title>
+  <title>Update User</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-tr from-teal-400 to-cyan-500 min-h-screen flex items-center justify-center font-sans">
+<body class="bg-gradient-to-br from-pink-200 via-pink-100 to-pink-300 min-h-screen flex items-center justify-center font-sans text-gray-800">
 
-  <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 relative overflow-hidden animate-fadeIn">
-    <!-- Decorative Blurs -->
-    <div class="absolute top-0 -left-10 w-40 h-40 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow pointer-events-none z-0"></div>
-    <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow pointer-events-none z-0"></div>
+  <div class="bg-white bg-opacity-90 backdrop-blur-sm p-8 rounded-2xl shadow-2xl w-full max-w-md animate-fadeIn">
+    <h2 class="text-2xl font-semibold text-center text-pink-600 mb-6">📝 Update User</h2>
 
-
-
-    <h2 class="text-3xl font-bold text-center text-teal-600 mb-8">📝 Update Account</h2>
-
-    <form action="<?=site_url('users/update/'.$user['id'])?>" method="POST" class="space-y-6">
-      <!-- First Name -->
+    <form action="<?=site_url('users/update/'.$user['id'])?>" method="POST" class="space-y-4">
+      
+      <!-- Username -->
       <div>
-        <label class="block text-gray-600 mb-2 font-medium">First Name</label>
-        <input type="text" name="first_name" value="<?= html_escape($user['first_name'])?>" required
-               class="w-full px-5 py-3 border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-teal-400 focus:outline-none transition duration-300">
-      </div>
-
-      <!-- Last Name -->
-      <div>
-        <label class="block text-gray-600 mb-2 font-medium">Last Name</label>
-        <input type="text" name="last_name" value="<?= html_escape($user['last_name'])?>" required
-               class="w-full px-5 py-3 border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-teal-400 focus:outline-none transition duration-300">
+        <label class="block text-pink-600 mb-1">Username</label>
+        <input type="text" name="username" value="<?= html_escape($user['username'])?>" required
+               class="w-full px-4 py-3 border border-pink-200 bg-pink-50 rounded-xl focus:ring-2 focus:ring-pink-300 focus:outline-none text-gray-800">
       </div>
 
       <!-- Email -->
       <div>
-        <label class="block text-gray-600 mb-2 font-medium">Email Address</label>
+        <label class="block text-pink-600 mb-1">Email Address</label>
         <input type="email" name="email" value="<?= html_escape($user['email'])?>" required
-               class="w-full px-5 py-3 border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-teal-400 focus:outline-none transition duration-300">
+               class="w-full px-4 py-3 border border-pink-200 bg-pink-50 rounded-xl focus:ring-2 focus:ring-pink-300 focus:outline-none text-gray-800">
       </div>
 
-      <!-- Update Button -->
+      <?php if(!empty($logged_in_user) && $logged_in_user['role'] === 'admin'): ?>
+        <!-- Role Dropdown for Admins -->
+        <div>
+          <label class="block text-pink-600 mb-1">Role</label>
+          <select name="role" required
+                  class="w-full px-4 py-3 border border-pink-200 bg-pink-50 rounded-xl focus:ring-2 focus:ring-pink-300 focus:outline-none text-gray-800">
+            <option value="user" <?= $user['role'] === 'user' ? 'selected' : ''; ?>>User</option>
+            <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : ''; ?>>Admin</option>
+          </select>
+        </div>
+
+        <!-- Password Field for Admins -->
+        <div class="relative">
+          <label class="block text-pink-600 mb-1">Password</label>
+          <input type="password" name="password" id="password"
+                 placeholder="Leave blank to keep current password"
+                 class="w-full px-4 py-3 border border-pink-200 bg-pink-50 rounded-xl focus:ring-2 focus:ring-pink-300 focus:outline-none text-gray-800">
+          <i class="fa-solid fa-eye absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-pink-600" id="togglePassword"></i>
+        </div>
+      <?php endif; ?>
+
+      <!-- Submit Button -->
       <button type="submit"
-              class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-2xl shadow-lg transform hover:scale-105 transition duration-300">
-        Update
+              class="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-3 rounded-xl shadow-md transition duration-200">
+        Update User
       </button>
     </form>
+
+    <!-- Return Button -->
+    <a href="<?=site_url('/users');?>" class="mt-4 block text-center bg-pink-300 hover:bg-pink-400 text-white py-2 rounded-xl shadow transition">
+      ⬅ Return to Home
+    </a>
   </div>
 
-  <!-- Animations -->
+  <!-- Password Toggle Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const togglePassword = document.getElementById('togglePassword');
+      const password = document.getElementById('password');
+
+      if (togglePassword && password) {
+        togglePassword.addEventListener('click', function() {
+          const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+          password.setAttribute('type', type);
+
+          this.classList.toggle('fa-eye');
+          this.classList.toggle('fa-eye-slash');
+        });
+      }
+    });
+  </script>
+
+  <!-- Fade-in animation -->
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-
-    @keyframes pulse-slow {
-      0%, 100% { transform: scale(1); opacity: 0.3; }
-      50% { transform: scale(1.1); opacity: 0.5; }
-    }
-    .animate-pulse-slow {
-      animation: pulse-slow 6s ease-in-out infinite;
+    .animate-fadeIn {
+      animation: fadeIn 0.8s ease;
     }
   </style>
 
+  <!-- FontAwesome for the eye icon -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </body>
 </html>
