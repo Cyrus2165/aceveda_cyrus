@@ -1,3 +1,4 @@
+<?php if (!isset($logged_in_user)) { $logged_in_user = ['role' => 'user']; } ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,41 +6,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create User</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="bg-gradient-to-br from-teal-200 via-teal-100 to-cyan-300 min-h-screen flex items-center justify-center font-sans">
 
-  <div class="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-lg">
-    <h2 class="text-2xl font-bold text-teal-600 mb-6 text-center">➕ Create New User</h2>
+<body class="bg-gradient-to-tr from-teal-400 to-cyan-500 min-h-screen flex items-center justify-center font-sans">
 
-    <form action="<?=site_url('users/create')?>" method="POST" class="space-y-5">
-      <div>
-        <label class="block text-gray-700 mb-2 font-medium">First Name</label>
-        <input type="text" name="first_name" required
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:outline-none">
+  <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 relative overflow-hidden animate-fadeIn">
+    <div class="absolute top-0 -left-10 w-40 h-40 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+    <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
+
+    <h1 class="text-2xl font-bold text-center text-teal-600 mb-6">👤 Create User</h1>
+
+    <form action="<?= site_url('users/create/') ?>" method="POST" class="space-y-5">
+
+      <input type="text" name="username" placeholder="Username" required
+             class="w-full px-5 py-3 border border-gray-200 rounded-2xl bg-gray-50 shadow-sm focus:ring-2 focus:ring-teal-400 focus:outline-none">
+
+      <input type="email" name="email" placeholder="Email" required
+             class="w-full px-5 py-3 border border-gray-200 rounded-2xl bg-gray-50 shadow-sm focus:ring-2 focus:ring-teal-400 focus:outline-none">
+
+      <div class="relative">
+        <input type="password" name="password" id="password" placeholder="Password" required
+               class="w-full px-5 py-3 border border-gray-200 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+        <i class="fa-solid fa-eye absolute right-5 top-1/2 -translate-y-1/2 text-teal-500 cursor-pointer" id="togglePassword"></i>
       </div>
 
-      <div>
-        <label class="block text-gray-700 mb-2 font-medium">Last Name</label>
-        <input type="text" name="last_name" required
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:outline-none">
-      </div>
-
-      <div>
-        <label class="block text-gray-700 mb-2 font-medium">Email</label>
-        <input type="email" name="email" required
-          class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-400 focus:outline-none">
-      </div>
+      <?php if($logged_in_user['role'] === 'admin'): ?>
+        <select name="role" required class="w-full px-5 py-3 border border-gray-200 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-teal-400 focus:outline-none">
+          <option value="" disabled selected>Select Role</option>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      <?php else: ?>
+        <input type="hidden" name="role" value="user">
+      <?php endif; ?>
 
       <button type="submit"
-        class="w-full bg-teal-600 hover:bg-teal-700 text-white py-3 rounded-xl font-semibold shadow-lg transition">
-        Save User
+              class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-2xl shadow-lg transform hover:scale-105 transition duration-300">
+        Create User
       </button>
     </form>
 
     <div class="text-center mt-6">
-      <a href="<?=site_url('users')?>" class="text-teal-600 hover:underline font-medium">← Back to List</a>
+      <a href="<?=site_url('/users'); ?>" class="text-teal-600 font-semibold hover:underline">⬅ Return to Home</a>
     </div>
   </div>
+
+  <style>
+    @keyframes fadeIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes pulse-slow { 0%,100%{transform:scale(1);opacity:.3;} 50%{transform:scale(1.1);opacity:.5;} }
+    .animate-pulse-slow { animation:pulse-slow 6s ease-in-out infinite; }
+  </style>
+
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = password.type === 'password' ? 'text' : 'password';
+      password.type = type;
+      togglePassword.classList.toggle('fa-eye');
+      togglePassword.classList.toggle('fa-eye-slash');
+    });
+  </script>
 
 </body>
 </html>
