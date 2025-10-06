@@ -7,57 +7,71 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="<?= base_url(); ?>/public/style.css" />
 
-  <style>
-    body {
-      background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-      font-family: 'Poppins', sans-serif;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th {
-      background-color: #0597f2;
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    td, th {
-      padding: 12px 16px;
-      text-align: left;
-    }
-    tr:nth-child(even) {
-      background-color: #f1f9ff;
-    }
-    tr:hover {
-      background-color: #e0f3ff;
-    }
-    .pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      margin-top: 1rem;
-    }
-    .pagination button, .pagination a {
-      padding: 6px 12px;
-      border-radius: 6px;
-      background-color: #ffffff;
-      color: #007bff;
-      font-weight: 500;
-      border: 1px solid #007bff;
-      transition: 0.2s;
-    }
-    .pagination button:hover, .pagination a:hover {
-      background-color: #007bff;
-      color: #ffffff;
-    }
-    .pagination .active {
-      background-color: #007bff;
-      color: #fff;
-      font-weight: 600;
-    }
-  </style>
+ <style>
+  body {
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Table styling */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th {
+    background-color: #0597f2;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td, th {
+    padding: 12px 16px;
+    text-align: left;
+  }
+  tr:nth-child(even) {
+    background-color: #f1f9ff;
+  }
+  tr:hover {
+    background-color: #e0f3ff;
+  }
+
+  /* Pagination styling */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1rem;
+  }
+  .pagination a, 
+  .pagination strong,
+  .pagination span {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    background-color: #fff;
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+  .pagination a:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  .pagination strong {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+  }
+</style>
 </head>
 
 <body class="min-h-screen flex flex-col">
@@ -120,22 +134,11 @@
     </div>
 
     <!-- Pagination -->
-    <div class="pagination mt-6">
-      <?php if ($currentPage > 1): ?>
-        <a href="?page=1<?= isset($_GET['q']) ? '&q=' . urlencode($_GET['q']) : '' ?>">⏮ First</a>
-        <a href="?page=<?= $currentPage - 1 ?><?= isset($_GET['q']) ? '&q=' . urlencode($_GET['q']) : '' ?>">← Prev</a>
-      <?php endif; ?>
-
-      <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-        <a href="?page=<?= $i ?><?= isset($_GET['q']) ? '&q=' . urlencode($_GET['q']) : '' ?>"
-          class="<?= $i == $currentPage ? 'active' : '' ?>"><?= $i ?></a>
-      <?php endfor; ?>
-
-      <?php if ($currentPage < $totalPages): ?>
-        <a href="?page=<?= $currentPage + 1 ?><?= isset($_GET['q']) ? '&q=' . urlencode($_GET['q']) : '' ?>">Next →</a>
-        <a href="?page=<?= $totalPages ?><?= isset($_GET['q']) ? '&q=' . urlencode($_GET['q']) : '' ?>">Last ⏭</a>
-      <?php endif; ?>
-    </div>
+<div class="mt-6 flex justify-center">
+  <div class="pagination">
+    <?= $page; ?>
+  </div>
+</div>
 
     <!-- Create New User Button -->
     <div class="text-center mt-8">
@@ -150,6 +153,5 @@
   <footer class="mt-auto text-center py-4 text-white">
     © 2025 User Management System — Designed with 💙 by Your Team
   </footer>
-  <style> @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } } body { animation: fadeIn 0.8s ease-in-out; } </style>
 </body>
 </html>
