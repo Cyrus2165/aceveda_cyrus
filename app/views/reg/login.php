@@ -4,71 +4,168 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body class="bg-gradient-to-tr from-teal-400 to-cyan-500 min-h-screen flex items-center justify-center font-sans">
-
-  <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10 relative overflow-hidden animate-fadeIn">
-    <!-- Decorative circles -->
-    <div class="absolute top-0 -left-10 w-40 h-40 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
-    <div class="absolute -bottom-10 -right-10 w-56 h-56 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse-slow"></div>
-
-    <h2 class="text-3xl font-bold text-center text-teal-600 mb-8">🔑 Login</h2>
-
-    <?php if (!empty($error)): ?>
-      <div class="bg-red-100 text-red-700 border border-red-300 rounded-xl p-3 mb-4 text-center font-medium">
-        <?= $error ?>
-      </div>
-    <?php endif; ?>
-
-    <form method="post" action="<?= site_url('reg/login') ?>" class="space-y-6">
-      <div class="relative">
-        <input type="text" name="username" placeholder="Username" required
-               class="w-full px-5 py-3 border border-gray-200 rounded-2xl shadow-sm bg-gray-50 focus:ring-2 focus:ring-teal-400 focus:outline-none">
-      </div>
-
-      <div class="relative">
-        <input type="password" placeholder="Password" name="password" id="password" required
-               class="w-full px-5 py-3 border border-gray-200 rounded-2xl shadow-sm bg-gray-50 focus:ring-2 focus:ring-teal-400 focus:outline-none">
-        <i class="fa-solid fa-eye toggle-password absolute right-5 top-1/2 -translate-y-1/2 text-teal-500 cursor-pointer" id="togglePassword"></i>
-      </div>
-
-      <button type="submit"
-              class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-2xl shadow-lg transform hover:scale-105 transition duration-300">
-        Login
-      </button>
-    </form>
-
-    <p class="text-center text-gray-600 mt-6 text-sm">
-      Don’t have an account? 
-      <a href="<?= site_url('reg/register'); ?>" class="text-teal-600 font-semibold hover:underline">Register here</a>
-    </p>
-  </div>
 
   <style>
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
-    @keyframes pulse-slow {
-      0%,100% {transform:scale(1);opacity:0.3;}
-      50% {transform:scale(1.1);opacity:0.5;}
+
+    body, html {
+      width: 100%;
+      height: 100%;
     }
-    .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #99f6e4, #5eead4, #2dd4bf);
+    }
+
+    .login {
+      background: white;
+      padding: 50px 40px;
+      width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      border: 1px solid #67e8f9;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .login h2 {
+      text-align: center;
+      font-size: 2em;
+      font-weight: 600;
+      color: #0d9488;
+      margin-bottom: 10px;
+    }
+
+    .inputBox {
+      position: relative;
+      margin-bottom: 15px;
+    }
+
+    .inputBox input {
+      width: 100%;
+      padding: 15px 45px 15px 20px;
+      font-size: 1.1em;
+      color: #0f766e;
+      border-radius: 8px;
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      outline: none;
+    }
+
+    .inputBox ::placeholder {
+      color: #14b8a6;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 1.1em;
+      color: #14b8a6;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      background: linear-gradient(to right, #14b8a6, #06b6d4);
+      color: #fff;
+      font-size: 1.15em;
+      font-weight: 500;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #0d9488, #0891b2);
+    }
+
+    .group {
+      text-align: center;
+    }
+
+    .group a {
+      font-size: 1em;
+      color: #0d9488;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .group a:hover {
+      text-decoration: underline;
+    }
+
+    .error-box {
+      background: rgba(13,148,136,0.08);
+      color: #0d9488;
+      padding: 10px;
+      border: 1px solid #0d9488;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.95em;
+      margin-bottom: 10px;
+    }
   </style>
+</head>
+<body>
+  <section>
+    <div class="login">
+      <h2>Login</h2>
+
+      <?php if (!empty($error)): ?>
+        <div class="error-box">
+          <?= $error ?>
+        </div>
+      <?php endif; ?>
+
+      <form method="post" action="<?= site_url('reg/login') ?>">
+        <div class="inputBox">
+          <input type="text" placeholder="Username" name="username" required>
+        </div>
+
+        <div class="inputBox">
+          <input type="password" placeholder="Password" name="password" id="password" required>
+          <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+        </div>
+
+        <button type="submit" id="btn">Login</button>
+      </form>
+
+      <div class="group">
+        <p style="font-size: 0.9em;">
+          Don't have an account? <a href="<?= site_url('reg/register'); ?>">Register here</a>
+        </p>
+      </div>
+    </div>
+  </section>
 
   <script>
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#password');
-    togglePassword.addEventListener('click', function() {
-      const type = password.type === 'password' ? 'text' : 'password';
-      password.type = type;
+
+    togglePassword.addEventListener('click', function () {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+
       this.classList.toggle('fa-eye');
       this.classList.toggle('fa-eye-slash');
     });
   </script>
-
 </body>
 </html>

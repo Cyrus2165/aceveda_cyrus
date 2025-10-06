@@ -1,157 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Directory</title>
+  <link rel="stylesheet" href="<?=base_url();?>/public/style.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="<?= base_url(); ?>/public/style.css" />
 
- <style>
-  body {
-    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-    font-family: 'Poppins', sans-serif;
-    animation: fadeIn 0.8s ease-in-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Table styling */
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  th {
-    background-color: #0597f2;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  td, th {
-    padding: 12px 16px;
-    text-align: left;
-  }
-  tr:nth-child(even) {
-    background-color: #f1f9ff;
-  }
-  tr:hover {
-    background-color: #e0f3ff;
-  }
-
-  /* Pagination styling */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 1rem;
-  }
-  .pagination a, 
-  .pagination strong,
-  .pagination span {
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: 1px solid #007bff;
-    background-color: #fff;
-    color: #007bff;
-    font-weight: 500;
-    text-decoration: none;
-    transition: 0.2s;
-  }
-  .pagination a:hover {
-    background-color: #007bff;
-    color: #fff;
-  }
-  .pagination strong {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: 600;
-  }
-</style>
+  <style>
+    /* Pagination Styling */
+    .pagination {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .pagination a {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #14b8a6; /* teal-500 */
+      color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .pagination a:hover {
+      background-color: #0d9488; /* teal-600 */
+    }
+    .pagination strong {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: #0f766e; /* teal-700 */
+      color: white;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
-  <div class="container mx-auto px-4 py-8">
+<body class="bg-gradient-to-br from-teal-300 via-cyan-200 to-teal-400 min-h-screen font-sans text-gray-800">
 
-    <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-      <span>👥</span> User Directory
-    </h2>
-
-    <!-- Search Bar -->
-    <div class="flex justify-end mb-4">
-      <form method="get" class="flex items-center gap-2">
-        <input
-          type="text"
-          name="q"
-          value="<?= isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '' ?>"
-          placeholder="Search user..."
-          class="px-3 py-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
-        />
-        <button type="submit" class="px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-          🔍
-        </button>
-      </form>
+  <!-- Navbar -->
+  <nav class="bg-gradient-to-r from-teal-600 to-cyan-500 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-white font-semibold text-xl tracking-wide">📊 User Management</a>
+      <!-- Logout button in navbar -->
+      <a href="<?=site_url('reg/logout');?>"
+         class="bg-white text-teal-600 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+         Logout
+      </a>
     </div>
+  </nav>
 
-    <!-- User Table -->
-    <div class="overflow-x-auto rounded-lg shadow-lg bg-white">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (!empty($users)): ?>
-            <?php foreach ($users as $user): ?>
-              <tr>
-                <td><?= htmlspecialchars($user['id']); ?></td>
-                <td><?= htmlspecialchars($user['username']); ?></td>
-                <td><?= htmlspecialchars($user['email']); ?></td>
-                <td><?= htmlspecialchars($user['role']); ?></td>
-                <td>
-                  <a href="update.php?id=<?= $user['id']; ?>" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-                    ✏️ Update
-                  </a>
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto mt-10 px-4">
+
+    <div class="bg-white bg-opacity-90 backdrop-blur-sm shadow-xl rounded-2xl p-8">
+
+      <!-- Logged In User Display -->
+      <?php if(!empty($logged_in_user)): ?>
+        <div class="mb-8 bg-teal-100 text-teal-800 px-6 py-5 rounded-xl shadow-lg text-center">
+          <h2 class="text-3xl font-bold mb-1">
+            Welcome, <span class="font-semibold"><?= html_escape($logged_in_user['username']); ?></span>!
+          </h2>
+          <p class="text-xl">Role: <span class="font-semibold"><?= html_escape($logged_in_user['role']); ?></span></p>
+        </div>
+      <?php else: ?>
+        <div class="mb-6 bg-red-100 text-red-700 px-4 py-3 rounded-lg shadow text-center">
+          Logged in user not found
+        </div>
+      <?php endif; ?>
+
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold text-teal-600">👥 User Directory</h1>
+
+        <!-- Search Bar -->
+        <form method="get" action="<?=site_url('users');?>" class="flex">
+          <input 
+            type="text" 
+            name="q" 
+            value="<?=html_escape($_GET['q'] ?? '')?>" 
+            placeholder="Search user..." 
+            class="w-full border border-teal-200 bg-teal-50 rounded-l-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-300 text-gray-800">
+          <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-r-xl transition">
+            🔍
+          </button>
+        </form>
+      </div>
+      
+      <!-- Table -->
+      <div class="overflow-x-auto rounded-xl border border-teal-200">
+        <table class="w-full text-center border-collapse">
+          <thead>
+            <tr class="bg-gradient-to-r from-teal-600 to-cyan-500 text-white">
+              <th class="py-3 px-4">ID</th>
+              <th class="py-3 px-4">Username</th>
+              <th class="py-3 px-4">Email</th>
+              <th class="py-3 px-4">Role</th>
+              <th class="py-3 px-4">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <?php foreach(html_escape($users) as $user): ?>
+              <tr class="hover:bg-cyan-50 transition duration-200">
+                <td class="py-3 px-4"><?=($user['id']);?></td>
+                <td class="py-3 px-4"><?=($user['username']);?></td>
+                <td class="py-3 px-4">
+                  <span class="bg-teal-100 text-teal-700 text-sm font-medium px-3 py-1 rounded-full">
+                    <?=($user['email']);?>
+                  </span>
+                </td>
+                <td class="py-3 px-4 font-medium"><?=($user['role']);?></td>
+                <td class="py-3 px-4 space-x-3">
+                  <?php if($logged_in_user['role'] === 'admin' || $logged_in_user['id'] == $user['id']): ?>
+                    <a href="<?=site_url('users/update/'.$user['id']);?>"
+                       class="px-4 py-2 text-sm font-medium rounded-lg bg-cyan-500 text-white hover:bg-cyan-600 transition duration-200 shadow">
+                      ✏️ Update
+                    </a>
+                  <?php endif; ?>
+
+                  <?php if($logged_in_user['role'] === 'admin'): ?>
+                    <a href="<?=site_url('users/delete/'.$user['id']);?>"
+                       onclick="return confirm('Are you sure you want to delete this record?');"
+                       class="px-4 py-2 text-sm font-medium rounded-lg bg-teal-600 text-white hover:bg-teal-700 transition duration-200 shadow">
+                      🗑️ Delete
+                    </a>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
-          <?php else: ?>
-            <tr>
-              <td colspan="5" class="text-center py-4 text-gray-500">No users found</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-6 flex justify-center">
+        <div class="pagination">
+          <?= $page; ?>
+        </div>
+      </div>
+
+      <!-- Create New User -->
+      <div class="mt-6 text-center">
+        <a href="<?=site_url('users/create')?>"
+           class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition duration-200">
+          ➕ Create New User
+        </a>
+      </div>
     </div>
-
-    <!-- Pagination -->
-<div class="mt-6 flex justify-center">
-  <div class="pagination">
-    <?= $page; ?>
-  </div>
-</div>
-
-    <!-- Create New User Button -->
-    <div class="text-center mt-8">
-      <a href="create_user.php"
-        class="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition">
-        ➕ Create New User
-      </a>
-    </div>
-
   </div>
 
-  <footer class="mt-auto text-center py-4 text-white">
-    © 2025 User Management System — Designed with 💙 by Your Team
-  </footer>
 </body>
 </html>
