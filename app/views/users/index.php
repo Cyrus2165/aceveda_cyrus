@@ -18,7 +18,7 @@
     .pagination a {
       display: inline-block;
       padding: 0.5rem 1rem;
-      background-color: #ec4899;
+      background-color: #14b8a6;
       color: white;
       border-radius: 0.5rem;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -27,12 +27,12 @@
       transition: background-color 0.2s ease-in-out;
     }
     .pagination a:hover {
-      background-color: #db2777;
+      background-color: #0d9488;
     }
     .pagination strong {
       display: inline-block;
       padding: 0.5rem 1rem;
-      background-color: #be185d;
+      background-color: #0f766e;
       color: white;
       border-radius: 0.5rem;
       font-weight: 600;
@@ -41,15 +41,15 @@
   </style>
 </head>
 
-<body class="bg-gradient-to-br from-pink-200 via-pink-100 to-pink-300 min-h-screen font-sans text-gray-800">
+<body class="bg-gradient-to-br from-teal-200 via-cyan-100 to-teal-300 min-h-screen font-sans text-gray-800">
 
   <!-- Navbar -->
-  <nav class="bg-gradient-to-r from-pink-600 to-pink-400 shadow-md">
+  <nav class="bg-gradient-to-r from-teal-600 to-cyan-500 shadow-md">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <a href="#" class="text-white font-semibold text-xl tracking-wide">📊 User Management</a>
       <!-- Logout button in navbar -->
       <a href="<?=site_url('reg/logout');?>" 
-         class="bg-white text-pink-600 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition">
+         class="bg-white text-teal-600 font-semibold px-4 py-2 rounded-lg shadow hover:bg-gray-100 transition">
          Logout
       </a>
     </div>
@@ -62,7 +62,7 @@
 
       <!-- Logged In User Display -->
       <?php if(!empty($logged_in_user)): ?>
-        <div class="mb-8 bg-pink-100 text-pink-800 px-6 py-5 rounded-xl shadow-lg text-center">
+        <div class="mb-8 bg-teal-100 text-teal-800 px-6 py-5 rounded-xl shadow-lg text-center">
           <h2 class="text-3xl font-bold mb-1">
             Welcome, <span class="font-semibold"><?= html_escape($logged_in_user['username']); ?></span>!
           </h2>
@@ -76,7 +76,7 @@
 
       <!-- Header -->
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-pink-600">👥 User Directory</h1>
+        <h1 class="text-2xl font-semibold text-teal-600">👥 User Directory</h1>
 
         <!-- Search Bar -->
         <form method="get" action="<?=site_url('users');?>" class="flex">
@@ -85,18 +85,18 @@
             name="q" 
             value="<?=html_escape($_GET['q'] ?? '')?>" 
             placeholder="Search user..." 
-            class="w-full border border-pink-200 bg-pink-50 rounded-l-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-300 text-gray-800">
-          <button type="submit" class="bg-pink-500 hover:bg-pink-600 text-white px-4 rounded-r-xl transition">
+            class="w-full border border-teal-200 bg-teal-50 rounded-l-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-300 text-gray-800">
+          <button type="submit" class="bg-teal-500 hover:bg-teal-600 text-white px-4 rounded-r-xl transition">
             🔍
           </button>
         </form>
       </div>
       
       <!-- Table -->
-      <div class="overflow-x-auto rounded-xl border border-pink-200">
+      <div class="overflow-x-auto rounded-xl border border-teal-200">
         <table class="w-full text-center border-collapse">
           <thead>
-            <tr class="bg-gradient-to-r from-pink-600 to-pink-400 text-white">
+            <tr class="bg-gradient-to-r from-teal-600 to-cyan-500 text-white">
               <th class="py-3 px-4">ID</th>
               <th class="py-3 px-4">Username</th>
               <th class="py-3 px-4">Email</th>
@@ -106,11 +106,11 @@
           </thead>
           <tbody class="divide-y divide-gray-100">
             <?php foreach(html_escape($users) as $user): ?>
-              <tr class="hover:bg-pink-50 transition duration-200">
+              <tr class="hover:bg-teal-50 transition duration-200">
                 <td class="py-3 px-4"><?=($user['id']);?></td>
                 <td class="py-3 px-4"><?=($user['username']);?></td>
                 <td class="py-3 px-4">
-                  <span class="bg-pink-100 text-pink-700 text-sm font-medium px-3 py-1 rounded-full">
+                  <span class="bg-teal-100 text-teal-700 text-sm font-medium px-3 py-1 rounded-full">
                     <?=($user['email']);?>
                   </span>
                 </td>
@@ -118,7 +118,7 @@
                 <td class="py-3 px-4 space-x-3">
                   <?php if($logged_in_user['role'] === 'admin' || $logged_in_user['id'] == $user['id']): ?>
                     <a href="<?=site_url('users/update/'.$user['id']);?>"
-                       class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-400 text-white hover:bg-pink-500 transition duration-200 shadow">
+                       class="px-4 py-2 text-sm font-medium rounded-lg bg-cyan-500 text-white hover:bg-cyan-600 transition duration-200 shadow">
                       ✏️ Update
                     </a>
                   <?php endif; ?>
@@ -126,7 +126,7 @@
                   <?php if($logged_in_user['role'] === 'admin'): ?>
                     <a href="<?=site_url('users/delete/'.$user['id']);?>"
                        onclick="return confirm('Are you sure you want to delete this record?');"
-                       class="px-4 py-2 text-sm font-medium rounded-lg bg-pink-600 text-white hover:bg-pink-700 transition duration-200 shadow">
+                       class="px-4 py-2 text-sm font-medium rounded-lg bg-teal-600 text-white hover:bg-teal-700 transition duration-200 shadow">
                       🗑️ Delete
                     </a>
                   <?php endif; ?>
@@ -147,7 +147,7 @@
       <!-- Create New User -->
       <div class="mt-6 text-center">
         <a href="<?=site_url('users/create')?>"
-           class="inline-block bg-pink-500 hover:bg-pink-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition duration-200">
+           class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-medium px-6 py-3 rounded-lg shadow-md transition duration-200">
           ➕ Create New User
         </a>
       </div>
