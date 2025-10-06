@@ -154,7 +154,7 @@ class UsersController extends Controller {
 
     public function delete($id)
     {
-        $this->call->model('UserModel');
+        $this->call->model('UsersModel');
         $this->check_login();
 
         $logged_in_user = $_SESSION['user'];
